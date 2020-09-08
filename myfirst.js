@@ -5,6 +5,7 @@ var http = require('http');
 // tries to access your computer on port 8080 (http://localhost:8080)
 http.createServer(function (req, res) {
     res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end('Hello World!');
+    res.write('Hello world!')
+    res.end();
 }).listen(8080);
 
