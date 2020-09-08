@@ -41,3 +41,24 @@ LESSON: NEVER TRUST DATA FROM THE BROWSER
 - keep track of most popular threats via OWASP list
 - use vulnerability scanning tools
 - only store and display data that you need (like the last 4 digits of credit card number rather than the whole thing)
+
+WHAT IS NODE.JS
+- both browser JS and Node.js run on the V8 JS runtime engine, which takes your code and converts it into faster machine code (low-level code a computer can run w/out needing to interpret it first)
+- Node.js is a JS runtime built on Chrome's V8 JS engine
+- it uses a non-blocking I/O model (in a blocking I/O, a second request isn't initiated until the first completes so you'd have to start a new thread for every request) - basically you can initiate requests in parallel which eliminates the need for multi-threading (which JS isn't good at anyway)
+
+JAVASCRIPT HAS A SINGLE-THREADED EVENT LOOP
+- JS has a single call stack == one thread == can do one thing at a time
+- call stack is a data structure that records where in the program we are, so if we step into a function we push something onto the top of the stack, if we return from a function we pop something off the top of the stack (when you get an error, the console prints the stack trace (the state of the stack when the error happened)
+- blocking = code that's slow (console.log isn't but while loops and network requests are) and on that stack
+- that's a problem for JS because we're running code in browsers (you wouldn't be able to do anything while requests are processing) so the solution is asynchronous callbacks
+- JS is single threaded but the browser gives us other functionality (Web API's like the DOM, setTimeout and AJAX) which are effectively threads that you can make calls to and that's where JS concurrency happens (running things in parallel)
+- Web API's can't modify your stack so when they're done they push their task onto the task queue. The event loop then kicks in - it's job is to look at the V8 stack and the task queue and if the stack is empty it takes the first thing on the task queue and pushes it onto the stack (which runs it)
+- so if you run set timeout with the time being 0, that's generally to defer a task until the stack is clear
+- setTimeout isn't a guaranteed execution, it's a minimum time execution
+- asynchronous callbacks = callbacks that are going to be pushed onto the callback queue at sometime in the future
+- the browser's render queue (ideally wants to repaint the browser every 16ms) is constrained by what you're doing in JS, but is given a higher priority than your callback queue. So if you do your callbacks asynchronously you give the render a chance to work between callbacks on your queue
+- don't block the event loop = don't put shitty, slow code on the stack because you block the browser from doing what it needs to do
+
+
+
