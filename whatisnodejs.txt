@@ -1,0 +1,15 @@
+INTRO TO SERVER SIDE CODE
+
+- used to dynamically display different data when needed (generally from a db stored on a server and sent to the client to be displayed via some code (HTML or JS)
+- lets you tailor website content for users (dynamic sites can highlight content that's more relevant based on user habits, or store personal preferences)
+- static sites = return the same hard-coded content from the server whenever a particular resource is requested
+- dynamic sites = some of the response content is generated dynamically (only when needed); html pages are normally created by inserting data from a db into placeholders in html templates; most of the code to support a dynamic website must run on the server
+- client side code = primarily concerned with improving appearance + behavior; server side code = primarily concerned with choosing which content is returned to the browser in response to requests (has full access to the OS)
+- what you can do on the server side: efficient storage and delivery of info, customized user experience via saved info - like credit cards or recently travelled places, controlled access to content, store session/state info,push notifications and communication, data analysis from which you can refine responses (the algorithm)
+
+WEB SERVERS AND HTTP
+
+HTTP requests include: a target url, a method (GET, POST, HEAD-get the meta data w/ getting the body, PUT, DELETE, TRACE), additional info like url parameters, post data or client side cookies (contain session data about the client)
+- AJAX = returning data to a web browser so it can dynamically update its own content
+
+WEB FRAMEWORKS
