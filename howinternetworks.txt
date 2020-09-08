@@ -1,0 +1,33 @@
+# 100daysofcode
+
+## The Odin Project
+
+How the internet works:
+- protocols = how a message will be addressed/passed on (TCP/IP - transports data, http/https - web access, RTP - live video, streaming)
+- large messages are broken up into small pieces to be transferred across the net (packets). Each one contains details about how it fits together, where it came from and where it's going
+- DNS = giant address book
+- once we have the IP (internet protocol) for the packets, they're passed along to their destination by routers (like a baton)
+- servers are computers connected directly to the internet (wire); computers connected indirectly to the internet through an ISP (internet service provider) are called clients
+- anywhere 2 or more pieces of the internet intersect is a piece of equipment called a router (adds layers of info as packet travels to server which it unravels at each router to read directions on how to send the packet back to the client)
+- host headers are used to uniquely identify those websites that might share SSDs (server hardware)
+- data travels in light pulses through optical fiber cables, which eventually connect to your router, which converts the light pulses to electrical signals (if you're using a cell, the optical data has to be sent to a cell tower)
+- ICANN manages IP address assignment, DN registration, etc
+- the internet uses existing telephone infrastructure to connect everyone; to connect our network to that infra we need a modem, which turns the info from our network into info manageable by the telephone infra and vice cersa (which then goes to an ISP, etc)
+- the internet is the technical infrastructure whereas the web is a service built on top of it (with other services, like email, built on top of that)
+- the search index in a library is like a search engine
+- browser (infra) vs search engine (the service)
+- in an analogy of a request/response from client to server: the server is the store you're going to, TCP/IP is like the method of transportation you take, http is like the language you use to order goods at the server store (defines a language for clients and servers to communicate)
+- if websites were sent as single big chunks, only one user could download one at a time (as opposed to the packet system)
+
+HTTP example:
+
+GET / HTTP/1.1
+Host: www.opera.com
+This message specifies:
+
+GET: That we wish to GET a representation of information.
+/: That the information we want to get at is stored at the root of the site.
+HTTP/1.1: We are speaking using HTTP version 1.1.
+Host:: I’m trying to reach a specific site.
+www.opera.com: the name of the site is www.opera.com.
+
