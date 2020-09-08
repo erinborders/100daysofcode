@@ -13,3 +13,31 @@ HTTP requests include: a target url, a method (GET, POST, HEAD-get the meta data
 - AJAX = returning data to a web browser so it can dynamically update its own content
 
 WEB FRAMEWORKS
+Web frameworks can: work directly with http requests and responses (via request handlers), route requests to the appropriate handler, make it easy to access data in the request, abstract and simplify db access (abstraction layer = object relational mapper or ORM), which can do basic data validation, rendering data (by providing templating systems like the double handlebars syntax)
+- django was created to support newspaper website development so it's good for blogs and other sites that involve publishing things
+- flask is much lighter and great for creating web apps running on embedded devices
+- opinionated frameworks = ones that have recommended 'best' ways to solve a particular problem (more productive when you're trying to solve common problem but sometimes less flexible)
+- consider whether your web framework has caching support, horizontal scaling and web security
+
+Good web frameworks examples: Django, Flask, Express, Deno (JS, provides a mechanism that naturally maintains better security), Laravel (PHP), ASP.NET (Microsoft), Spring Boot (Java) - its strength is building larger scale apps that use a cloud approach
+
+WEBSITE SECURITY
+- threats are most successful when the web app either trusts or isn't paranoid enough about the data coming from the browser
+- cross site scripting (xss) = an attacker injects client-side scripts through the website and into the browsers of other users; reflected xss vulnerability happens when user content that is passed to the server is returned immediately and unmodified for display in the browser; persistent xss vulnerability happens when the malicious script is stored on the website and then later redisplayed unmodified for other users to execute unwittingly
+- the data from POST or GET requests is the most common source of xss vulnerabilities; the best defense is to remove or disable any markup that can potentially contain instructions to run the code
+- input sanitization = the process of changing user data so it can't be used to run scripts or affect the execution of server code (many web frameworks due this by default)
+- SQL injection = an attacker executes arbitrary SQL code on a db allowing data to be accessed, changed or deleted; types include error-based, boolean error, and time-based
+- SQL injection vulnerabilities are present if the user input that's passed to an underlying SQL statement can change the meaning of the statement; one way to avoid this is to escape all the characters in the user input that have a special meaning in SQL
+- Cross site request forgery (CSRF) = an attacker executes actions using the credentials of another user; one way to prevent this is for the server to require requests to include a user-specific site-generated secret 
+- clickjacking = attacker hijacks clicks meant for a visible top-level site and routes them to a hidden page beneath
+- Dos = attackers flood a site with fake request so that access to a site is disrupted
+- Directory traversal (file and disclosure) = attackers try to access parts of the web server file system that they shouldn't by using navigation characters
+- file inclusion = attacker's able to specify an 'unintended' file for display or execution in data passed to the server
+- command injection = attackers execute arbitrary system commands on the host OS
+
+LESSON: NEVER TRUST DATA FROM THE BROWSER
+- enable MFA
+- use HTTPS and HSTS (HTTP strict transport security)
+- keep track of most popular threats via OWASP list
+- use vulnerability scanning tools
+- only store and display data that you need (like the last 4 digits of credit card number rather than the whole thing)
