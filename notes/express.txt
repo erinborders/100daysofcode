@@ -264,6 +264,39 @@ app.get('/user/:id', logStuff, function (req, res, next) {
 })
 
 
+ROUTER LEVEL MIDDLEWARE
+
+- works in the same way as app level middleware (router.use and router.METHOD)
+- define your router middleware, then mount it on the app 
+
+app.use('<path>', <router name>)
+
+- To skip the rest of the router’s middleware functions, call next('router') to pass control back out of the router instance.
+
+EXAMPLE:
+
+// predicate the router with a check and bail out when needed
+router.use(function (req, res, next) {
+  if (!req.headers['x-auth']) return next('router')
+  next()
+})
+
+// use the router and 401 anything falling through
+app.use('/admin', router, function (req, res) {
+  res.sendStatus(401)
+})
+
+ERROR HANDLING MIDDLEWARE
+
+- Define error-handling middleware functions in the same way as other middleware functions, except with four arguments instead of three, specifically with the signature (err, req, res, next)), otherwise the code will think it's regular middleware and fail to handle errors
+
+TO USE THIRD PARTY MIDDLEWARE
+
+- require it then load it
+
+var cookieParser = require('cookie-parser')
+app.use(cookieParser())
+
 
 
 
