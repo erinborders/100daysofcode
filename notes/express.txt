@@ -1,2 +1,184 @@
-EXPRESS OVERVIEW
+EXPRESS LESSON
+
+You will want to create your own modules, because this allows you to 
+organise your code into managable parts — a monolithic single-file 
+application is hard to understand and maintain. Using modules also 
+helps you manage your namespace, because only the variables you explicitly 
+export are imported when you use a module.
+
+To make objects available outside of a module, you just need to expose
+them as additional properties on the exports object.
+
+Example:
+
+In square.js file
+
+exports.area = function(width) { return width * width; };
+exports.perimeter = function(width) { return 4 * width; };
+
+Then you can import like so
+
+var square = require('./square'); 
+(Here we require() the name of the file without the (optional) .js file extension)
+console.log('The area of a square with a width of 4 is ' + square.area(4));
+
+If you want to export a complete object instead of building it one property
+at a time, assign it to module.exports
+
+module.exports = {
+	area: function(width) {
+	    return width * width;
+	},
+
+	perimeter: function(width) {
+	    return 4 * width;
+	}
+}
+
+You can think of exports as a shortcut to module.exports (it's just a variable that
+gets initialized to the value of module.exports before the module is evaluated)
+
+Using callbacks can get messy, but this can be avoided by using a module like
+async or moving to ES6 features like promises
+
+MODULE BEST PRACTICES
+
+- move repeatedly used code into a function
+- when your function or group of functions gets big enough, move them into their
+own file and expose them using module.exports
+- if you have code that can be used across multiple projects, give it its own readme, tests,
+and package.json and publish it to github and npm
+- individual files in a module shouldn't be longer than about 150 lines of JS
+
+CREATING STANDALONE NODE MODULES
+- create a package.json file (npm init for unscoped modules, npm init --scope=@scope-name for scoped modules; provide the name, version (start with 1.0.0), main (the name of the file that will be loaded when your module is required...the default is index.js))
+- create the file that will be loaded when your module's required by another app
+In this file, add functions as properties of the exports object
+- test your module by publishing it to npm (for private packages - use npm publish, for public packages - us npm publish --access public), installing it to a test directory and then requiring it in a test file
+
+ASYNC OVERVIEW
+
+- an npm module that helps you work with async JS
+- includes methods like reduce, filter, etc, but also has common patterns for asynchronous control flow (async.parallel, async.series, async.waterfall, etc)
+
+PROMISE OVERVIEW
+
+- represents the eventual completion or failure of an asynchronous operation and its resulting value
+
+Example:
+
+function successCallback(result) {
+  console.log("Audio file ready at URL: " + result);
+}
+
+function failureCallback(error) {
+  console.error("Error generating audio file: " + error);
+}
+
+createAudioFileAsync(audioSettings, successCallback, failureCallback);
+
+Can be written as:
+
+createAudioFileAsync(audioSettings).then(successCallback, failureCallback);
+
+Which can also be written as:
+
+const promise = createAudioFileAsync(audioSettings);
+promise.then(successCallback, failureCallback);
+
+- you can chain thens, catches, and thens after those catches (which will be the actions that run whether or not there's an error)
+
+NODE BEST PRACTICES
+
+- the 'error first' callback is the standard for node js callbacks
+- continuation passing style (cps) is the old-school name for node's heavy use of callbacks (where continuation functions are callbacks)
+- node relies on async code to stay fast so having a dependable callback pattern is crucial
+- throwing errors shurts down your entire application
+
+
+ERROR HANDLING EXAMPLES:
+
+if(err) {
+  // Handle "Not Found" by responding with a custom error page
+  if(err.fileNotFound) {
+    return this.sendErrorMessage('File Does not Exist');
+  }
+  // Ignore "No Permission" errors, this controller knows that we don't care
+  // Propagate all other errors (Express will catch them)
+  if(!err.noPermission) {
+    return next(err);
+  }
+}
+
+MORE ABOUT CALLBACKS
+
+- callbacks can be called in parallel, in a queue, in serial, etc (the async library is great for that)
+
+// Example taken from caolan/async README
+async.parallel({
+    one: function(callback){
+        setTimeout(function(){
+            callback(null, 1);
+        }, 200);
+    },
+    two: function(callback){
+        setTimeout(function(){
+            callback(null, 2);
+        }, 100);
+    }
+},
+function(err, results) {
+    // results is equal to: {one: 1, two: 2}
+});
+
+MORE ABOUT EXPRESS
+
+- express HTTP verb methods include: checkout(), copy(), head(), notify(), etc
+- app.all() will be called in response to any HTTP method; used for loading middleware function at a particular path for all request methods
+
+Example:
+
+app.all('/secret', function(req, res, next) {
+  console.log('Accessing the secret section ...');
+  next(); // pass control to the next handler
+});
+
+- it's useful to group route handlers for a particular part of a site together and access them using a common route-prefix; this is achieved via express.Router
+
+Example:
+
+// wiki.js - Wiki route module
+
+var express = require('express');
+var router = express.Router();
+
+// Home page route
+router.get('/', function(req, res) {
+  res.send('Wiki home page');
+});
+
+// About page route
+router.get('/about', function(req, res) {
+  res.send('About this wiki');
+});
+
+module.exports = router;
+
+While in the main app file (app.js) we would require the route model (wiki.js) and call use() on the express app to add the router to the middleware handling path
+
+Example:
+
+var express = require('express')
+var app = express()
+var wiki = require('./wiki.js')
+
+app.use('/wiki', wiki);
+
+
+
+
+
+
+
+
 
