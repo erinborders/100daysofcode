@@ -174,8 +174,94 @@ var wiki = require('./wiki.js')
 
 app.use('/wiki', wiki);
 
+USING MIDDLEWARE
 
+- middleware functions are functions that have access to the req and res objects as well as the next middleware function in the app's req/res cycle (commonly denoted by a variable named next)
+- middleware functions typically perform some operation on requests/responses and then call the next function in the 'stack' which might be more middleware or a route handler (as opposed to route functions, which end the HTTP request-response cycle by returning some response to the client)
+- if middleware doesn't end the req/res cycle then it must call next() to pass control to the next middleware function or the req will be left hanging
+- common middleware tasks: working with cookies, sessions, user auth, logging, etc
 
+EXAMPLE WITH MORGAN REQUEST LOGGER MIDDLEWARE
+
+- install it with npm then write the following
+
+var express = require('express');
+var logger = require('morgan');
+var app = express();
+app.use(logger('dev'));
+
+- middleware and routing functions are called in the order they're declared; middleware is usually called before setting routes, otherwise your route handlers wouldn't have access to functionality added by your middleware
+- app.use() applies the middleware to all responses
+- app.METHOD() applies the middleware to responses with a particular HTTP verb
+
+EXAMPLE:
+
+var express = require('express');
+var app = express();
+
+// An example middleware function
+var a_middleware_function = function(req, res, next) {
+  // ... perform some operations
+  next(); // Call next() so Express will call the next middleware function in the chain.
+}
+
+// Function added with use() for all routes and verbs
+// will be executed every time the app receives a req
+app.use(a_middleware_function);
+
+// Function added with use() for a specific route
+app.use('/someroute', a_middleware_function);
+
+// A middleware function added for a specific HTTP verb and route
+app.get('/', a_middleware_function);
+
+app.listen(3000);
+
+EXAMPLE OF LOADING A SERIES OF MIDDLEWARE FUNCTIONS AT A MOUNT POINT WITH A MOUNT PATH
+
+app.use('/user/:id', function (req, res, next) {
+  console.log('Request URL:', req.originalUrl)
+  next()
+}, function (req, res, next) {
+  console.log('Request Type:', req.method)
+  next()
+})
+
+- To skip the rest of the middleware functions from a router middleware stack, call next('route') to pass control to the next route. NOTE: next('route') will work only in middleware functions that were loaded by using the app.METHOD() or router.METHOD() functions.
+
+EXAMPLE:
+
+app.get('/user/:id', function (req, res, next) {
+  // if the user ID is 0, skip to the next route
+  if (req.params.id === '0') next('route')
+  // otherwise pass the control to the next middleware function in this stack
+  else next()
+}, function (req, res, next) {
+  // send a regular response
+  res.send('regular')
+})
+
+// handler for the /user/:id path, which sends a special response
+app.get('/user/:id', function (req, res, next) {
+  res.send('special')
+})
+
+EXPRESS EXAMPLE WITH ARRAYS
+
+function logOriginalUrl (req, res, next) {
+  console.log('Request URL:', req.originalUrl)
+  next()
+}
+
+function logMethod (req, res, next) {
+  console.log('Request Type:', req.method)
+  next()
+}
+
+var logStuff = [logOriginalUrl, logMethod]
+app.get('/user/:id', logStuff, function (req, res, next) {
+  res.send('User Info')
+})
 
 
 
