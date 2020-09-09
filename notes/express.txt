@@ -297,6 +297,26 @@ TO USE THIRD PARTY MIDDLEWARE
 var cookieParser = require('cookie-parser')
 app.use(cookieParser())
 
+CONFIGURABLE MIDDLEWARE
+
+- if you need your middleware to be configurable, export a function which accepts an options object
+
+EXAMPLE
+In my-middleware.js
+
+module.exports = function (options) {
+  return function (req, res, next) {
+    // Implement the middleware function based on the options object
+    next()
+  }
+}
+
+Then you can use it like this:
+
+var mw = require('./my-middleware.js')
+
+app.use(mw({ option1: '1', option2: '2' }))
+
 
 
 
