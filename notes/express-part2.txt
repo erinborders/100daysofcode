@@ -94,7 +94,12 @@ FILE STRUCTURE
 
 --> express application generator create a modular app skeleton that we can easily extend for creating web apps
 
+INSTALLING EXPRESS APPLICATION GENERATOR
 
+- generates an express app skeleton
+- install it with npm install express-generator (-g if you want it globally)
+- to create an express app named 'helloworld', navigate to where you want to create it and run express helloworld (you can specify settings with express --help)
+- install all the dependencies using npm install
 
 
 

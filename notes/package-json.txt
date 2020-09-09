@@ -1,0 +1,14 @@
+WHY USE NPM INIT
+
+- creates a place for metadata about the project; helps identify the project and acts as a baseline for users and contributors to get info about it
+
+RUNNING TASKS
+
+- you can put named scripts in your package.json files and call npm to execute them with the run-script command
+- used to automate running tests and parts of the development or build toolchain
+
+run scripts using this command:
+
+npm run lint
+
+
