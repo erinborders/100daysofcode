@@ -1,0 +1,101 @@
+SERVING STATIC FILES
+
+- the express.static middleware serves static files (including images, css, and JS); it's the only middleware function that's actually part of Express
+
+EXAMPLE:
+
+To serve static files from a directory named public
+
+app.use(express.static('public'));
+
+--> the first parameter specifies the root directory from which to serve static assets
+
+-------
+
+- you can call static() multiple times to serve multiple directories
+- you can also create a virtual prefix for your static urls rather than having the files added to the base url
+
+EXAMPLE:
+
+app.use('/media', express.static('public')); //specifies a mount path 'media'
+
+- if you run the express app from another directory, it's safer to use the absolute path of the directory that you want to serve:
+
+EXAMPLE:
+
+app.use('/static', express.static(path.join(__dirname, 'public')))
+--------
+
+HANDLING ERRORS
+
+- error handling middlewaare must be called after all other app.use and route calls so that they are the last middleware in the req handling process
+- express comes with a built in error handler which takes care of any remaining errors; if you pass next() and don't handle it in an error handler, it will be handled by the built in error handler
+- HTTP404 and other error status codes aren't treated as errors; to handle these you can add a middleware function
+- for errors in synchronous code, Express will catch it by default. For errors in asynchronous code invoked by route handlers and middleware, you must pass them to the next() function for Express to handle them
+
+EXAMPLE:
+
+app.get('/', function (req, res, next) {
+  fs.readFile('/file-does-not-exist', function (err, data) {
+    if (err) {
+      next(err) // Pass errors to Express.
+    } else {
+      res.send(data)
+    }
+  })
+})
+
+TIP: starting with Express 5, route handlers and middleware that return a promise will call next(value) automatically when they throw an error
+
+USING DATABASES
+
+- express can use any db supported by node
+- just install the db via npm
+- in your code, require the driver, connect to the db and then perform CRUD operations
+
+EXAMPLE:
+
+//for mongodb version 3.0 and up
+let MongoClient = require('mongodb').MongoClient;
+MongoClient.connect('mongodb://localhost:27017/animals', function(err, client){
+   if(err) throw err;
+
+   let db = client.db('animals');
+   db.collection('mammals').find().toArray(function(err, result){
+     if(err) throw err;
+     console.log(result);
+     client.close();
+   });
+});
+
+--> or you could access your db indirectly via an Object Relational Mapper (ORM), where you define your data as 'objects' or 'models' and the ORM maps these through to the underlying db format (like mongoose?)
+
+RENDERING DATA (VIEWS)
+
+- template engines (aka view engines) allow you to specify the structure of an output document in a template, using placeholders for data that'll be filled in when a page is generated
+- res.render supports pluggable template engines
+- In your application settings code you set the template engine to use and the location where Express should look for templates using the 'views' and 'view engines' settings, as shown below (you will also have to install the package containing your template library too!)
+
+EXAMPLE:
+
+const express = require('express')
+const path = require('path')
+const app = express()
+
+// set directory to contain the templates (views)
+app.set('views', path.join(__dirname, 'views'))
+
+// set view engine to use, in this case 'some_template_engine'
+app.set('view engine', 'some_template_engine')
+
+FILE STRUCTURE
+
+- it makes sense to split your app into files based on function (e.g. account management, blogs, discussion boards) and architectural problem domain (e.g. model, view or controller if you're using an MCV architecture)
+
+--> express application generator create a modular app skeleton that we can easily extend for creating web apps
+
+
+
+
+
+
