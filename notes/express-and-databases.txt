@@ -8,3 +8,9 @@ EXPRESS AND DATABASES OVERVIEW
 - bookshelf = provides transaction support
 - sequelize
 - graphQL
+
+DESIGNING MODELS
+
+- have separate models for every 'object' (group of related info) that you want to be able to change dynamically
+- UML models = show the models we'll define as boxes and the relationships between them , including their multiplicities (the max and min of each model that may be present in the relationship)
+- better to have the field that defines the relationship between documents/models in just one model
