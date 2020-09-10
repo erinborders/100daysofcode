@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 
+// the application entry point. the very first thing it does is require 
+// the 'real' app entry point (app.js) that sets up and returns the 
+// express() application object
+
+// then it sets up port information
+
 /**
  * Module dependencies.
  */
