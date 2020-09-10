@@ -1,0 +1,10 @@
+EXPRESS AND DATABASES OVERVIEW
+
+- the best way to interact with a database = 1. using the db's native query language (e.g. SQL), or 2. using an Object Data Model (ODM) or Object Relational Model (ORM); they represent the website's data as JS objects which are then mapped to the underlying db
+- best performance = using the db's query language (ODM/ORM are often slower because they use translation code to map between objects and the db format)
+- benefit of ORM's = provide an obvious place to perform data validation (unless performance is paramount, strongly consider using one)
+- mongoose = a mongodb object modeling tool; acts as a frontend to mongodb 
+- waterline = an ORM extracted from the Sails web framework (similar to express but aimed at more data driven api's)
+- bookshelf = provides transaction support
+- sequelize
+- graphQL
