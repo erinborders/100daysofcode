@@ -1,0 +1,17 @@
+NOTES ON TEMPLATING ENGINES
+
+Consider:
+
+Time to productivity — If your team already has experience with a templating language then it is likely they will be productive faster using that language. If not, then you should consider the relative learning curve for candidate templating engines.
+Popularity and activity — Review the popularity of the engine and whether it has an active community. It is important to be able to get support when problems arise throughout the lifetime of the website.
+Style — Some template engines use specific markup to indicate inserted content within "ordinary" HTML, while others construct the HTML using a different syntax (for example, using indentation and block names).
+Performance/rendering time.
+Features — you should consider whether the engines you look at have the following features available:
+Layout inheritance: Allows you to define a base template and then "inherit" just the parts of it that you want to be different for a particular page. This is typically a better approach than building templates by including a number of required components or building a template from scratch each time.
+"Include" support: Allows you to build up templates by including other templates.
+Concise variable and loop control syntax.
+Ability to filter variable values at template level (e.g. making variables upper-case, or formatting a date value).
+Ability to generate output formats other than HTML (e.g. JSON or XML).
+Support for asynchronous operations and streaming.
+Client-side features. If a templating engine can be used on the client this allows the possibility of having all or most of the rendering done client-side.
+
