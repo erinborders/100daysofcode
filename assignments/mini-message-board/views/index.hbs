@@ -1,2 +1,10 @@
 <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
+
+<div class="messages">
+    {{#each messages}}
+        <p class="message_text">{{this.text}}</p>
+        <p class="message_text">{{this.user}}</p>
+        <p class="message_text">{{this.added}}</p>
+    {{/each}}
+</div>
