@@ -39,3 +39,8 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+// heroku usually requires a procfile which specifies all the commands
+// that need to run on startup. With node js this file isn't obligatory
+// since heroku searches in the package.json for a start script, but it's
+// good practice to add it anyways
