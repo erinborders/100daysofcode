@@ -1,0 +1,29 @@
+ASYNC OVERVIEW
+
+- the older way to deal with asynchronous functions (as opposed to promises)
+- important functions:
+	- async.parallel = execute operations at the same time
+	- async.series = execute operations one after the other
+	- async.waterfall = execute operations that must be run in series with each operation depending on the results of preceding operations
+
+- async parallel takes a collection of functions to be run as the first argument, and an optional second argument (a callback that will be run when all the functions in the first argument have completed)
+- async series is declared and behaves in the same way as async parallel
+- IF THE ORDER FOR THESE IS IMPORTANT, COLLECT YOUR FUNCTIONS IN AN ARRAY
+- example of async waterfall:
+
+async.waterfall([
+  function(callback) {
+    callback(null, 'one', 'two');
+  },
+  function(arg1, arg2, callback) {
+    // arg1 now equals 'one' and arg2 now equals 'two'
+    callback(null, 'three');
+  },
+  function(arg1, callback) {
+    // arg1 now equals 'three'
+    callback(null, 'done');
+  }
+], function (err, result) {
+  // result now equals 'done'
+}
+);
