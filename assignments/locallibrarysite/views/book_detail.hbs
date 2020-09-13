@@ -1,0 +1,23 @@
+<h1>Title: {{book.title}}</h1>
+
+<p>Author: <a href="{{book.author.url}}">{{book.author.name}}</a></p>
+<p>Summary: {{book.summary}}</p>
+<p>ISBN: {{book.isbn}}</p>
+<p>Genre: 
+    {{#each book.genre}}
+        <a href="{{url}}">{{name}}</a>
+    {{/each}}
+</p>
+
+<div>
+    <h4>Copies</h4>
+
+    {{#if book_instances}}
+        {{#each book_instances}}
+        <p>{{status}}</p>
+        <p>Imprint: {{imprint}}</p>
+        {{/each}}
+    {{else}}
+        <p>There are no copies of this book in the library</p>
+    {{/if}}
+</div>
