@@ -5,8 +5,8 @@
         {{#each bookinstance_list}}
             <li><a href="{{url}}">{{book.title}}: {{imprint}}</a> - 
                 <span>{{status}}</span>
-                {{#if due_back}}
-                    <span>Due: {{due_back}}</span>
+                {{#if due_back_formatted}}
+                    <span>Due: {{due_back_formatted}}</span>
             {{/if}}     
             </li>
         {{/each}}
