@@ -4,4 +4,21 @@ HTML. Handlebars is the former. --}}
 
 
 <h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<p>Welcome to <em>LocalLibrary</em>, a very basic Express website</p>
+
+<h2>Dynamic Content</h2>
+
+{{#if error}}
+    <p>Error displaying content</p>
+{{else}}
+    <p>The library has the following record counts:</p>
+
+    <ul>
+        <li>Books: {{data.book_count}}</li>
+        <li>Copies: {{data.book_instance_count}}</li>
+        <li>Copies Available: {{data.book_instance_available_count}}</li>
+        <li>Authors: {{data.author_count}}</li>
+        <li>Genres: {{data.genre_count}}</li>
+    </ul>
+
+{{/if}}
