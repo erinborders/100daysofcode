@@ -7,6 +7,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+// var hbs = require('handlebars')
 
 // contain the code for handling particular sets of related routes (url paths)
 var indexRouter = require('./routes/index');
@@ -25,6 +26,11 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+// hbs.registerHelper('isavailable', function (value) {
+//   if (value == 'Available' || value == 'Maintenance') return true 
+//   return false
+// });
 
 // adding the middleware libraries into the request handling chain
 app.use(logger('dev'));
