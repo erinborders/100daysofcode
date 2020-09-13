@@ -1,0 +1,11 @@
+<h1>{{title}}</h1>
+
+{{#if author_list}}
+    <ul>
+        {{#each author_list}}
+            <li><a href="{{url}}">{{name}}</a>{{date_of_birth}} - {{date_of_death}}</li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p>There are no authors</p>
+{{/if}}
