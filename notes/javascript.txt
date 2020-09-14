@@ -1,0 +1,21 @@
+PROTOTYPES
+
+-Prototype is important in JavaScript because JavaScript does not have classical inheritance based on Classes (as most object oriented languages do), and therefore all inheritance in JavaScript is made possible through the prototype property
+-every JavaScript function has a prototype property (this property is empty by default), and you attach properties and methods on this prototype property when you want to implement inheritance. This prototype property is not enumerable; that is, it isn’t accessible in a for/in loop. But Firefox and most versions of Safari and Chrome have a __proto__ “pseudo” property (an alternative syntax) that allows you to access an object’s prototype property
+-All objects created with object literals and with the Object constructor inherits from Object.prototype. 
+- if you want to access a property of an object, the search for the property begins directly on the object. If the JS runtime can’t find the property there, it then looks for the property on the object’s prototype—the object it inherited its properties from.
+If the property is not found on the object’s prototype, the search for the property then moves to prototype of the object’s prototype (the father of the object’s father—the grandfather). And this continues until there is no more prototype (no more great-grand father; no more lineage to follow). This in essence is the prototype chain: the chain from an object’s prototype to its prototype’s prototype and onwards. 
+- All objects in JavaScript inherit properties and methods from Object.prototype. These inherited properties and methods are constructor, hasOwnProperty (), isPrototypeOf (), propertyIsEnumerable (), toLocaleString (), toString (), and valueOf (). ECMAScript 5 also adds 4 accessor methods to Object.prototype.
+- Note that in ECMAScript 5 you can set a property to read only, and in that case you cannot overwrite it 
+- Please note that __proto__ is not the same as [[Prototype]]. It’s a getter/setter for it.
+It exists for historical reasons. In modern language it is replaced with functions Object.getPrototypeOf/Object.setPrototypeOf that also get/set the prototype
+- In JavaScript, objects have a special hidden property [[Prototype]] (as named in the specification), that is either null or references another object. That object is called “a prototype”
+- The prototype is only used for reading properties. Write/delete operations work directly with the object.
+- No matter where the method is found: in an object or its prototype. In a method call, this is always the object before aka the dot evaluated at the call-time
+- The for..in loop iterates over inherited properties too. if you don't want that, use the obj.hasownproperty(key) method
+- Almost all other key/value-getting methods, such as Object.keys, Object.values and so on ignore inherited properties.
+- In modern engines, performance-wise, there’s no difference whether we take a property from an object or its prototype. They remember where the property was found and reuse it in the next request.
+- If you’re using constructors to make your objects it is best to define functions on the prototype of that object. Doing so means that a single instance of each function will be shared between all of the Student objects. If we declare the function directly in the constructor like we did when they were first introduced that function would be duplicated every time a new Student is created. In this example, that wouldn’t really matter much, but in a project that is creating thousands of objects, it really can make a difference.
+- the recommended way of setting the prototype of an object is Object.create(). Object.create very simply returns a new object with the specified prototype and any additional properties you want to add
+- if a property/method isn't unique to a bunch of instances, put it in the prototype since it's shared amongst objects without adding to the memory the way putting the prop/method in the parent object would; very important for large applications
+- 
