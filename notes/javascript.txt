@@ -18,4 +18,101 @@ It exists for historical reasons. In modern language it is replaced with functio
 - If you’re using constructors to make your objects it is best to define functions on the prototype of that object. Doing so means that a single instance of each function will be shared between all of the Student objects. If we declare the function directly in the constructor like we did when they were first introduced that function would be duplicated every time a new Student is created. In this example, that wouldn’t really matter much, but in a project that is creating thousands of objects, it really can make a difference.
 - the recommended way of setting the prototype of an object is Object.create(). Object.create very simply returns a new object with the specified prototype and any additional properties you want to add
 - if a property/method isn't unique to a bunch of instances, put it in the prototype since it's shared amongst objects without adding to the memory the way putting the prop/method in the parent object would; very important for large applications
-- 
+
+FACTORY FUNCTIONS
+
+- The factory function pattern is similar to constructors, but instead of using new to create an object, factory functions simply set up and return the new object when you call the function
+
+SCOPE AND CLOSURE
+
+- scope = variable access
+- context = the value of this
+- when you make a variable in global scope, you're actually making a property on the global (window) object
+- name/scope conflict = variables in different scopes with the same name
+- polluting the root scope = forgetting to use let, var or const when creating variables
+- The namespace is sometimes an interchangeable word for scope, but usually the refers to the highest level scope. 
+- Whenever you see a function within another function, the inner function has access to the scope in the outer function, this is called Lexical Scope or Closure - also referred to as Static Scope
+- Each function defined has its own nested scope as we know, and any function defined within another function has a local scope which is linked to the outer function - this link is called the chain. It’s always the position in the code that defines the scope. When resolving a variable, JavaScript starts at the innermost scope and searches outwards until it finds the variable/object/function it was looking for.
+
+EXAMPLE OF CLOSURE:
+
+Closures ties in very closely with Lexical Scope. A better example of how the closure side of things works, can be seen when returning a function reference - a more practical usage. Inside our scope, we can return things so that they’re available in the parent scope
+
+var sayHello = function (name) {
+  var text = 'Hello, ' + name;
+  return function () {
+    console.log(text);
+  };
+};
+
+Calling sayHello  will do nothing as it returns a function, which means it needs assignment and then calling:
+
+var helloTodd = sayHello('Todd');
+helloTodd(); // will call the closure and log 'Hello, Todd'
+
+OR
+
+sayHello('Bob')()
+
+A function doesn’t have to return in order to be called a closure though. Simply accessing variables outside of the immediate lexical scope creates a closure.
+
+
+CALL, APPLY AND BIND
+
+- The .call() and .apply() methods are really sweet, they allows you to pass in a scope to a function, which binds the correct this value
+- We can use either .call() or .apply() to change the scope, but any further arguments are where the two differ: .call(scope, arg1, arg2, arg3) takes individual arguments, comma separated, whereas .apply(scope, [arg1, arg2]) takes an Array of arguments.
+- using .call() or .apply() actually invokes your function so do this:
+myFunction.call(scope);
+- using .bind() does not invoke a function, it merely binds the values before the function is invoked. 
+nav.addEventListener('click', toggleNav.bind(scope, arg1, arg2), false);
+
+
+PUBLIC AND PRIVATE SCOPE
+
+- In many programming languages, you’ll hear about public and private scope, in JavaScript there is no such thing. We can, however, emulate public and private scope through things like Closures. By using JavaScript design patterns, such as the Module pattern for example, we can create public and private scope
+- There’s a great pattern (called the Module Pattern [and Revealing Module Pattern]) which allows us to scope our functions correctly, using private and public scope and an Object. Here I grab my global namespace, called Module, which contains all of my relevant code for that module:
+
+// define module
+var Module = (function () {
+  return {
+    myMethod: function () {
+      console.log('myMethod has been called.');
+    }
+  };
+})();
+
+// call module + methods
+Module.myMethod();
+
+HOW TO CREATE PRIVATE METHODS WITH MODULES
+
+var Module = (function () {
+  var privateMethod = function () {
+
+  };
+  return {
+    publicMethod: function () {
+
+    }
+  };
+})();
+
+
+- A very important part of JavaScript is ensuring security, which is exactly why we can’t afford to put all functions in the global scope as they’ll be publicly available, which makes them open to vulnerable attacks
+- One neat naming convention is to begin private methods with an underscore, which visually helps you differentiate between public and private
+
+var Module = (function () {
+  var _privateMethod = function () {
+
+  };
+  var publicMethod = function () {
+
+  };
+  return {
+    publicMethod: publicMethod,
+    anotherPublicMethod: anotherPublicMethod
+  }
+})();
+
+- The concept of closure is the idea that functions retain their scope even if they are passed around and called outside of that scope
+
