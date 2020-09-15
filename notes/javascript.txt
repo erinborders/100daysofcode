@@ -116,3 +116,15 @@ var Module = (function () {
 
 - The concept of closure is the idea that functions retain their scope even if they are passed around and called outside of that scope
 
+
+Class inheritance creates is-a relationships with restrictive taxonomies, all of which are eventually wrong for new use-cases. But it turns out, we usually employ inheritance for has-a, uses-a, or can-do relationships.
+
+
+IIFE
+
+- IIFE (Immediately Invoked Function Expression) = write a function, wrap it in parentheses, and then immediately call the function by adding () to the end of it
+
+
+NAMESPACING
+
+- Namespacing is a technique that is used to avoid naming collisions in our programs. For example, it’s easy to imagine scenarios where you could write multiple functions with the same name. In our calculator example, what if we had a function that added things to our HTML display, and a function that added numbers and operators to our stack as the users input them? It is conceivable that we would want to call all three of these functions add which, of course, would cause trouble in our program. If all of them were nicely encapsulated inside of an object, then we would have no trouble
